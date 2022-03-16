@@ -29,6 +29,9 @@ const userInfo = computed(() => info)
 </template>
 
 <style scoped lang="less">
+@import '../assets/styles/variables.less';
+@import '../assets/styles/mixins.less';
+
 .top-nav {
     background: #333;
 
@@ -51,8 +54,6 @@ const userInfo = computed(() => info)
                 }
 
                 &:hover {
-                    @import '../assets/styles/variables.less';
-                    @import '../assets/styles/mixins.less';
                     color: @mainColor;
                     .hoverShadow();
                 }
@@ -65,11 +66,5 @@ const userInfo = computed(() => info)
             }
         }
     }
-}
-
-.container {
-    width: 1240px;
-    margin: 0 auto;
-    position: relative;
 }
 </style>
