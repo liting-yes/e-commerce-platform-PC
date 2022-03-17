@@ -1,8 +1,13 @@
 <script setup>
+import HomeCategory from './components/HomeCategory.vue';
 </script>
 
 <template>
-    <div>
-        首页
+    <div class="home-page">
+        <div class="home-entry">
+            <div class="container">
+                <home-category></home-category>
+            </div>
+        </div>
     </div>
 </template>
