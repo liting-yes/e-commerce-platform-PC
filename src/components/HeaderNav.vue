@@ -1,132 +1,102 @@
 <script setup>
+import { useCategoryStore } from '../store'
+import { computed } from 'vue'
+
+const topCategory = useCategoryStore()
+const list = computed(() => {
+    return topCategory.list
+})
+const show = (item) => {
+    topCategory.show(item)
+}
+const hide = (item) => {
+    topCategory.hide(item)
+}
 </script>
 
 <template>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo"><RouterLink to="/">商城</RouterLink></h1>
-            <ul class="navs">
-                <li class="home"><RouterLink to="/">首页</RouterLink> </li>
-                <li><a href="###">居家</a></li>
-                <li><a href="###">美食</a></li>
-                <li><a href="###">服饰</a></li>
-                <li><a href="###">母婴</a></li>
-                <li><a href="###">个护</a></li>
-                <li><a href="###">严选</a></li>
-                <li><a href="###">数码</a></li>
-                <li><a href="###">运动</a></li>
-                <li><a href="###">杂项</a></li>
-            </ul>
-            <div class="search">
-                <i class="iconfont icon-search"></i>
-                <input type="text" placeholder="搜一搜" >
+    <ul class="navs">
+        <li class="home"><RouterLink to="/">首页</RouterLink> </li>
+        <li v-for="item in list" :key="item.id" @mouseenter="show(item)" @mouseleave="hide(item)">
+            <RouterLink :to="`/category/${item.id}`" @click="hide(item)">{{ item.name }}</RouterLink>
+            <div class="layer" :class="{open: item.open}">
+                <ul>
+                    <li v-for="sub in item.children" :key="sub.id">
+                        <RouterLink :to="`/category/sub/${sub.id}`" @click="hide(item)">
+                            <img :src="sub.picture" alt="">
+                            <p>{{ sub.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
             </div>
-            <div class="cart">
-                <a href="###">
-                    <i class="iconfont icon-cartfill"><em>2</em></i>
-                </a>
-            </div>
-        </div>
-    </header>
+        </li>
+    </ul>
 </template>
 
 <style scoped lang="less">
 @import '../assets/styles/variables.less';
-@import '../assets/styles/mixins.less';
-
-.header {
-    background: #fff;
-}
-
-.container {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 200px;
-
-    a {
-        display: block;
-        height: 132px;
-        width: 100%;
-        text-indent: -9999px;
-        background: url(../assets/images/logo.png) no-repeat center 18px / contain;
-    }
-}
-
 .navs {
-    width: 820px;
+  width: 820px;
+  display: flex;
+  justify-content: space-around;
+  padding-left: 40px;
+  position: relative;
+  z-index: 998;
+  > li {
+    margin-right: 40px;
+    width: 38px;
+    text-align: center;
+    > a {
+      font-size: 16px;
+      line-height: 32px;
+      height: 32px;
+      display: inline-block;
+    }
+    &:hover {
+      > a {
+        color: @mainColor;
+        border-bottom: 1px solid @mainColor;
+      }
+    }
+  }
+}
+.layer {
+  width: 1240px;
+  background-color: #fff;
+  position: absolute;
+  left: -200px;
+  top: 56px;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  box-shadow: 0 0 5px #ccc;
+  transition: all .2s .1s;
+  ul {
     display: flex;
-    justify-content: space-around;
-    padding-left: 40px;
-
+    flex-wrap: wrap;
+    padding: 0 70px;
+    align-items: center;
+    height: 132px;
     li {
-        margin-right: 40px;
-        width: 38px;
-        text-align: center;
-
-        a {
-            font-size: 16px;
-            line-height: 32px;
-            height: 32px;
-            display: inline-block;
+      width: 110px;
+      text-align: center;
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      p {
+        padding-top: 10px;
+      }
+      &:hover {
+        p {
+          color: @mainColor;
         }
-
-        &:hover {
-            a {
-                color: @mainColor;
-                border-bottom: 1px solid @mainColor;
-            }
-        }
+      }
     }
-}
-
-.search {
-    width: 170px;
-    height: 32px;
-    position: relative;
-    border-bottom: 1px solid #e7e7e7;
-    line-height: 32px;
-    
-    .icon-search {
-        font-size: 18px;
-        margin-left: 5px;
-    }
-
-    input {
-        width: 140px;
-        padding-left: 5px;
-        color: #666;
-    }
-}
-
-.cart {
-    width: 50px;
-    a {
-        height: 32px;
-        line-height: 32px;
-        text-align: center;
-        position: relative;
-        display: block;
-
-        .icon-cartfill {
-            font-size: 22px;
-        }
-
-        em {
-            font-style: normal;
-            position: absolute;
-            right: 0;
-            top: 0;
-            padding: 1px 6px;
-            line-height: 1;
-            background: @helpColor;
-            color: #fff;
-            font-size: 12px;
-            border-radius: 10px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-    }
+  }
+  &.open {
+      height: 132px;
+      opacity: 1;
+  }
 }
 </style>

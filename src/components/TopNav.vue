@@ -22,15 +22,15 @@ const userInfo = computed(() => info)
                 <li><a href="javascript:;">会员中心</a></li>
                 <li><a href="javascript:;">帮助中心</a></li>
                 <li><a href="javascript:;">关于我们</a></li>
-                <li><a href="javascript:;">手机版</a></li>
+                <li><a href="javascript:;"><i class="iconfont icon-shouji"></i>手机版</a></li>
             </ul>
         </div>
     </nav>
 </template>
 
 <style scoped lang="less">
-@import '../assets/styles/variables.less';
 @import '../assets/styles/mixins.less';
+@import '../assets/styles/variables.less';
 
 .top-nav {
     background: #333;

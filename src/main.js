@@ -6,6 +6,7 @@ import router from './router'
 import 'normalize.css'
 import './assets/styles/common.less'
 import './assets/styles/mixins.less'
+import './assets/styles/variables.less'
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)

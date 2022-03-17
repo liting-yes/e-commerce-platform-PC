@@ -40,7 +40,7 @@ instance.interceptors.response.use(
     }
 )
 
-export default (orl, method, submitData) => {
+export default (url, method, submitData) => {
     return instance({
         url,
         method,
